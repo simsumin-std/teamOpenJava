@@ -8,7 +8,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script>
+        //버튼 표시/숨김
+        function toggleBTN(){
+            var hidden = document.getElementById("hidden");
+            hidden.style.height = window.innerHeight - 60+"px";
+            if(hidden.style.right == "0px"){
+                hidden.style.right = "-300px";
+            } else {
+                hidden.style.right = "0px";
+            }
+        }
+        </script>
+        <div id="Btn" onclick="toggleBTN()">
+        <!--목록처럼 보이기-->
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <!--클릭 후 나오는 메뉴-->
+        <div id="hidden">
+          <ul><!--주소입력안함-->
+            <li><a href="#">MENU ITEM 1</a></li>
+            <li><a href="#">MENU ITEM 2</a></li>
+            <li><a href="#">MENU ITEM 3</a></li>
+          </ul>
+        </div>
+    <!--첫 시작 제목-->
     <h1><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></h1>
+    <!--검색창-->
     <form action="">
         <div class="mx-auto mt-5 search-bar input-group mb-3">
             <input type="text" class="form-control rounded-pill" placeholder="검색창입니다." aria-label="검색창입니다." aria-describedby="button-addon2">

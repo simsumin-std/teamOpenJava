@@ -1,6 +1,10 @@
+.dropdown{
+    margin-left:1400px;
+    margin-top:30px;
+}
 h1{
     text-align:center;
-    margin-top:230px;
+    margin-top:200px;
     font-size: 90px;
 }
 h1 span:nth-child(1){
@@ -23,4 +27,42 @@ h1 span:nth-child(6){
 }
 .search-bar{
 width:500px;
+}
+#Btn{
+	position: fixed;
+    right: 20px;
+    top: 20px;
+	width: 30px;
+	height: 30px;
+	background: linear-gradient(#FFF,#DDD);
+	border: #AAA 1px solid;
+	border-radius: 2px;
+	padding: 2px 5px;
+	cursor: pointer;
+	transition: border 0.3s linear 0s;
+}
+#Btn:hover{
+	border: #06F 1px solid;
+}
+#Btn:hover div{
+	background: #06F;
+}
+#Btn > div{
+	width: 20px;
+	height: 4px;
+	background: #333;
+	margin: 3px 0px;
+	border-radius: 4px;
+	transition: background 0.3s linear 0s;
+}
+#hidden{
+	position: fixed;
+	right: -300px;
+	top: 60px;
+	width: 260px;
+	height: 0px;
+	background: #333;
+	color:#ededed;
+	padding:15px;
+	transition: right 0.3s linear 0s;
 }
