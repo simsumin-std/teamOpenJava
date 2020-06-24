@@ -28,6 +28,19 @@ h1 span:nth-child(5){
 h1 span:nth-child(6){
     color : #ea4335;
 }
+h4{
+    margin-top:50px;
+    text-align:center; 
+}
+.google{
+    color:#ea4335;
+}
+.naver{
+    color:#03c75a;
+}
+.daum{
+    color:#4285f4;
+}
 .search-bar{
 width:500px;
 }

@@ -37,13 +37,22 @@
     <!--첫 시작 제목-->
     <h1><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></h1>
     <!--검색창-->
-    <form action="">
-        <div class="mx-auto mt-5 search-bar input-group mb-3">
-            <input type="text" class="form-control rounded-pill" placeholder="검색창입니다." aria-label="검색창입니다." aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary rounded-pill" type="button" id="button-addon2">Button</button>
-                </div>
+    <h4 class="google">구글</h4>
+    <form action="https://www.google.com/search" method="GET">
+        <div class="mx-auto search-bar input-group mb-3">
+            <input name="q" type="text" class="form-control rounded-pill" placeholder="구글 검색창입니다." aria-label="구글 검색창입니다.">
         </div>
+    </form>
+    <h4 class="naver">네이버</h4>
+    <form action="https://search.naver.com/search.naver" method="GET">
+        <div class="mx-auto search-bar input-group mb-3">
+            <input name="query" type="text" class="form-control rounded-pill" placeholder="네이버 검색창입니다." aria-label="네이버 검색창입니다.">
+        </div>
+        <h4 class="daum">다음</h4>
+        <form action="https://search.daum.net/search" method="GET">
+            <div class="mx-auto search-bar input-group mb-3">
+                <input name="q" type="text" class="form-control rounded-pill" placeholder="다음 검색창입니다." aria-label="네이버 검색창입니다.">
+            </div>
     </form>
 </body>
 </html>
