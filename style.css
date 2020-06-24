@@ -2,6 +2,9 @@
     margin-left:1400px;
     margin-top:30px;
 }
+.navbar{
+    width:900px;
+}
 h1{
     text-align:center;
     margin-top:200px;
@@ -42,10 +45,10 @@ width:500px;
 	transition: border 0.3s linear 0s;
 }
 #Btn:hover{
-	border: #06F 1px solid;
+	border: rgb(0, 255, 0) 1px solid;
 }
 #Btn:hover div{
-	background: #06F;
+	background: rgb(0, 255, 0);
 }
 #Btn > div{
 	width: 20px;
