@@ -1,3 +1,4 @@
+/*기능*/
 .dropdown{
     margin-left:1400px;
     margin-top:30px;
@@ -5,45 +6,10 @@
 .navbar{
     width:900px;
 }
-h1{
-    text-align:center;
-    margin-top:200px;
-    font-size: 90px;
-}
-h1 span:nth-child(1){
-    color : #4285f4;
-}
-h1 span:nth-child(2){
-    color : #ea4335;
-}
-h1 span:nth-child(3){
-    color : #fbbc05;
-}
-h1 span:nth-child(4){
-    color : #4285f4;
-}
-h1 span:nth-child(5){
-    color : #34a853;
-}
-h1 span:nth-child(6){
-    color : #ea4335;
-}
-h4{
-    margin-top:50px;
-    text-align:center; 
-}
-.google{
-    color:#ea4335;
-}
-.naver{
-    color:#03c75a;
-}
-.daum{
-    color:#4285f4;
-}
 .search-bar{
-width:500px;
-}
+    width:500px;
+    }
+/*버튼 스타일*/
 #Btn{
 	position: fixed;
     right: 20px;
@@ -81,4 +47,54 @@ width:500px;
 	color:#ededed;
 	padding:15px;
 	transition: right 0.3s linear 0s;
+}
+/*제목 스타일*/
+h1{
+    text-align:center;
+    margin-top:200px;
+    font-size: 90px;
+}
+#covidtitle{
+    margin-top:20px;
+}
+h1 span:nth-child(1){
+    color : #4285f4;
+}
+h1 span:nth-child(2){
+    color : #ea4335;
+}
+h1 span:nth-child(3){
+    color : #fbbc05;
+}
+h1 span:nth-child(4){
+    color : #4285f4;
+}
+h1 span:nth-child(5){
+    color : #34a853;
+}
+h1 span:nth-child(6){
+    color : #ea4335;
+}
+h4{
+    margin-top:50px;
+    text-align:center; 
+}
+.google{
+    color:#ea4335;
+}
+.naver{
+    color:#03c75a;
+}
+.daum{
+    color:#4285f4;
+}
+
+/*내용*/
+.inline{
+    position: absolute;
+    width:900px; left:0; right:0; margin-left:auto; margin-right:auto;
+    background:#ededed;
+}
+.mp4set{
+    width:900px; left:0; right:0; margin-left:auto; margin-right:auto;
 }
