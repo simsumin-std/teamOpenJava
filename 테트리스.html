@@ -78,32 +78,25 @@ function square_init()
     }
 }
 function Run()
-    {
-        square_y++;
+{
         var size=(square_in[square_in_number]).length;
-	    for(k=0;k<size;k+=2)
-	    {
+        square_y++;
+        if(CheckConflict())
+        {
+        square_y--;
+            for(k=0;k<size;k+=2)
+            {
             check_y = square_y + square_in[square_in_number][k];
             check_x = square_x + square_in[square_in_number][k+1];
-                if(check_y >20 || square[check_y][check_x]!=0)
-                {
-                    square_y--;
-                    for(k=0;k<size;k+=2)
-                    {
-                        check_y = square_y + square_in[square_in_number][k];
-                        check_x = square_x + square_in[square_in_number][k+1];
-                        square[check_y][check_x]=1;
-                    }
-                    square_y=0;
-                    square_in_number++;
-                    if(square_in_number>=7)
-                    square_in_number=0
-                    break;
-            
-                }    
+            square[check_y][check_x]=1;
+            }
+            square_y=0;
+            square_in_number++;
+            if(square_in_number>=7)
+            square_in_number=0;                
 	    }
         onDraw();
-    }
+}
 
 function onDraw()
     {
@@ -134,12 +127,60 @@ function onDraw()
 			    Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
 			}
     }
+
+function onKeyDown(event)
+{
+    if(event.which==37)
+    {   
+        square_x--;
+        if(CheckConflict())square_x++;
+        else
+            onDraw();
+    }
+    
+    if(event.which==40 || event.which==32)
+    {   
+        square_y++;
+        if(CheckConflict())square_y--;
+        else
+            onDraw();
+    }
+
+    if(event.which==39)
+    {   
+        square_x++;
+        if(CheckConflict())square_x--;
+        else
+            onDraw();
+    }
+    
+    if(event.which==38)
+    {   
+     
+    }
+}
+
+function CheckConflict()
+{
+    var size=(square_in[square_in_number]).length;
+    for(k=0;k<size;k+=2)
+    {
+        check_y=square_y + square_in[square_in_number][k];
+        check_x=square_x + square_in[square_in_number][k+1];
+        if(check_x < 0 || check_x >=10 ||check_y >=20 || square[check_y][check_x] !=0)return true;
+    }
+    return false;
+
+}
 	
 	
 	$(document).ready(function(){ //자동 실행 함수
 		Init();
 		setInterval(Run,100); //내부 함수 주기적으로 실행
-	});
+    });
+    $(document).keydown(function(event){
+        onKeyDown(event);
+    });
     </script>
 <canvas id='MyCanvas' width="800" height="600">CANVAS</canvas>
 </body>
