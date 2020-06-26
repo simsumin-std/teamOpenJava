@@ -40,6 +40,14 @@ function square_in_init()
     square_in.push(tmp);
     
     tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(0,2);tmp.push(1,0);
+    square_in.push(tmp);
+
+    tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(0,2);tmp.push(1,2);
+    square_in.push(tmp);
+
+    tmp=new Array();
     tmp.push(0,0);tmp.push(0,1);tmp.push(1,0);tmp.push(1,1);
     square_in.push(tmp);
 }
@@ -72,6 +80,28 @@ function square_init()
 function Run()
     {
         square_y++;
+        var size=(square_in[square_in_number]).length;
+	    for(k=0;k<size;k+=2)
+	    {
+            check_y = square_y + square_in[square_in_number][k];
+            check_x = square_x + square_in[square_in_number][k+1];
+                if(check_y >20 || square[check_y][check_x]!=0)
+                {
+                    square_y--;
+                    for(k=0;k<size;k+=2)
+                    {
+                        check_y = square_y + square_in[square_in_number][k];
+                        check_x = square_x + square_in[square_in_number][k+1];
+                        square[check_y][check_x]=1;
+                    }
+                    square_y=0;
+                    square_in_number++;
+                    if(square_in_number>=7)
+                    square_in_number=0
+                    break;
+            
+                }    
+	    }
         onDraw();
     }
 
