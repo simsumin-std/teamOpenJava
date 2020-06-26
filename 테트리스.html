@@ -1,13 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title>테트리스</title>
 </head>
 <body>
-    <script src="테트리스.js">
-    </script>
-    <canvas id='MyCanvas' width="700" height="700"></canvas>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        var init=false;
+var myCanvas;
+var Context;
+var square;
+var square_boxsize=25;
+var square_top=50;
+var square_left=280;
 
+function square_init()
+{
+	square=new Array();
+	for(i=0;i<20;++i) //전위 연산자
+	{
+		square.push(new Array(10));
+		for(j=0;j<10;++j)
+		square[i][j]=0; //배열 초기화
+	}
+}
+
+function Init()
+{
+	if(init==false)
+	{
+            myCanvas=document.getElementById("MyCanvas")
+			Context=myCanvas.getContext("2d");
+			init=true;
+			square_init();
+			square[5][5]=1;
+        }
+    }
+
+function Run()
+    {
+        onDraw();
+    }
+
+function onDraw()
+    {
+        if(init==false)return;
+
+        Context.strokeStyle="#000"; //선 색상
+        Context.lineWidth=1; //선 두께
+		Context.strokeRect(0, 0, myCanvas.width-1, myCanvas.height-1); //테두리만 있는 사각형
+		
+		
+		for(i=0;i<20;++i)
+			for(j=0;j<10;++j)
+			{
+				if(square[i][j]==0)
+				Context.fillStyle="#D8D8D8"; //색깔
+			else
+				Context.fillStyle="blue";
+			x=square_left + j*square_boxsize;
+			y=square_top + i*square_boxsize;
+			Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
+			}
+    }
+	
+	
+	$(document).ready(function(){ //자동 실행 함수
+		Init();
+		setInterval(Run,100); //내부 함수 주기적으로 실행
+	});
+    </script>
+<canvas id='MyCanvas' width="800" height="600">CANVAS</canvas>
 </body>
+
 </html>
