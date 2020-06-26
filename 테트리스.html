@@ -14,32 +14,64 @@ var square;
 var square_boxsize=25;
 var square_top=50;
 var square_left=280;
+var square_in;
 
-function square_init()
+
+
+
+function square_in_init()
 {
-	square=new Array();
-	for(i=0;i<20;++i) //전위 연산자
-	{
-		square.push(new Array(10));
-		for(j=0;j<10;++j)
-		square[i][j]=0; //배열 초기화
-	}
+    square_in=new Array();
+    
+    tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(0,2);tmp.push(0,3);
+    square_in.push(tmp);
+    
+    tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(0,2);tmp.push(1,1);
+    square_in.push(tmp);
+    
+    tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(1,1);tmp.push(1,2);
+    square_in.push(tmp);
+    
+    tmp=new Array();
+    tmp.push(0,1);tmp.push(0,2);tmp.push(1,0);tmp.push(1,1);
+    square_in.push(tmp);
+    
+    tmp=new Array();
+    tmp.push(0,0);tmp.push(0,1);tmp.push(1,0);tmp.push(1,1);
+    square_in.push(tmp);
 }
+
+var square_in_number=3;
+var square_x=3;
+var square_y=0;
 
 function Init()
 {
-	if(init==false)
-	{
-            myCanvas=document.getElementById("MyCanvas")
-			Context=myCanvas.getContext("2d");
-			init=true;
-			square_init();
-			square[5][5]=1;
-        }
+    if(init==false)
+    {
+        myCanvas=document.getElementById("MyCanvas")
+        Context=myCanvas.getContext("2d");
+        init=true;
+        square_init();
+        square_in_init();
     }
-
+}
+function square_init()
+{
+    square=new Array();
+    for(i=0;i<20;++i) //전위 연산자
+    {
+        square.push(new Array(10));
+        for(j=0;j<10;++j)
+        square[i][j]=0; //배열 초기화
+    }
+}
 function Run()
     {
+        square_y++;
         onDraw();
     }
 
@@ -58,10 +90,18 @@ function onDraw()
 				if(square[i][j]==0)
 				Context.fillStyle="#D8D8D8"; //색깔
 			else
-				Context.fillStyle="blue";
-			x=square_left + j*square_boxsize;
-			y=square_top + i*square_boxsize;
-			Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
+                Context.fillStyle="green";
+                
+                var size=square_in[square_in_number].length; //떨어지는 블럭 검사
+                for(k=0;k<size;k+=2)
+                {
+                    if(square_y + square_in [square_in_number][k] == i
+                        && square_x + square_in [square_in_number][k+1] == j)
+                        Context.fillStyle='blue'
+                }
+			    x=square_left + j*square_boxsize;
+			    y=square_top + i*square_boxsize;
+			    Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
 			}
     }
 	
