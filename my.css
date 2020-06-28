@@ -1,0 +1,18 @@
+
+#chat_board
+{
+	height : 300px;
+	width : 300px;
+	border: 2px solid rgb(0, 0, 0);
+	overflow: auto;
+}
+
+#chatc
+{
+	width : 240px;
+}
+
+p
+{
+	line-height: 1em;
+}
