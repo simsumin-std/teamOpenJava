@@ -15,13 +15,14 @@ var square_boxsize=25;
 var square_top=50;
 var square_left=280;
 var square_in;
+var square_in_this;
 
 
 
 
 function square_in_init()
 {
-    square_in=new Array();
+    square_in=new Array(); //블럭
     
     tmp=new Array();
     tmp.push(0,0);tmp.push(0,1);tmp.push(0,2);tmp.push(0,3);
@@ -65,6 +66,9 @@ function Init()
         init=true;
         square_init();
         square_in_init();
+        square_in_number=Math.floor(Math.random()*6.9);
+        square_in_this=square_in[square_in_number].slice();
+        
     }
 }
 function square_init()
@@ -79,21 +83,23 @@ function square_init()
 }
 function Run()
 {
-        var size=(square_in[square_in_number]).length;
+        var size=square_in_this.length;
         square_y++;
-        if(CheckConflict())
+        if(CheckConflict()) //겹침
         {
-        square_y--;
+            square_y--;
             for(k=0;k<size;k+=2)
             {
-            check_y = square_y + square_in[square_in_number][k];
-            check_x = square_x + square_in[square_in_number][k+1];
+            check_y = square_y + square_in_this[k];
+            check_x = square_x + square_in_this[k+1];
             square[check_y][check_x]=1;
             }
+
             square_y=0;
-            square_in_number++;
-            if(square_in_number>=7)
-            square_in_number=0;                
+            square_x=3;
+
+            square_in_number=Math.floor(Math.random()*6.9);
+            square_in_this=square_in[square_in_number].slice();           
 	    }
         onDraw();
 }
@@ -115,11 +121,11 @@ function onDraw()
 			else
                 Context.fillStyle="green";
                 
-                var size=square_in[square_in_number].length; //떨어지는 블럭 검사
+                var size=square_in_this.length; //떨어지는 블럭 검사
                 for(k=0;k<size;k+=2)
                 {
-                    if(square_y + square_in [square_in_number][k] == i
-                        && square_x + square_in [square_in_number][k+1] == j)
+                    if(square_y + square_in_this[k] == i
+                        && square_x + square_in_this[k+1] == j)
                         Context.fillStyle='blue'
                 }
 			    x=square_left + j*square_boxsize;
@@ -130,8 +136,8 @@ function onDraw()
 
 function onKeyDown(event)
 {
-    if(event.which==37)
-    {   
+        if(event.which==37)
+        {   
         square_x--;
         if(CheckConflict())square_x++;
         else
@@ -156,18 +162,41 @@ function onKeyDown(event)
     
     if(event.which==38)
     {   
-     
+        Rotateblock();
+        onDraw();
     }
+
+}
+function Rotateblock()
+{
+    switch(square_in_number)
+	{
+		case 0: case 1: case 2: case 3: case 4: case 5: // 0~5 블럭모양
+			centerY=0; centerX=1;
+			break;
+		case 6: // 6 블럭모양
+			return;
+	}
+	square_in_save = square_in_this.slice();
+	for(i=0;i<square_in_this.length;i+=2)
+	{
+		y=square_in_this[i+1] - centerX;
+		x= -(square_in_this[i] - centerY);
+		square_in_this[i]=y + centerY;
+		square_in_this[i+1]=x + centerX;
+	}
+	if(CheckConflict())
+		square_in_this=square_in_save.slice();
 }
 
 function CheckConflict()
 {
-    var size=(square_in[square_in_number]).length;
+    var size=square_in_this.length;
     for(k=0;k<size;k+=2)
     {
-        check_y=square_y + square_in[square_in_number][k];
-        check_x=square_x + square_in[square_in_number][k+1];
-        if(check_x < 0 || check_x >=10 ||check_y >=20 || square[check_y][check_x] !=0)return true;
+        check_y=square_y + square_in_this[k];
+        check_x=square_x + square_in_this[k+1];
+        if(check_x < 0 || check_x >=10 || check_y >=20 || square[check_y][check_x]!=0)return true;
     }
     return false;
 
@@ -176,7 +205,7 @@ function CheckConflict()
 	
 	$(document).ready(function(){ //자동 실행 함수
 		Init();
-		setInterval(Run,100); //내부 함수 주기적으로 실행
+		setInterval(Run,500); //내부 함수 주기적으로 실행
     });
     $(document).keydown(function(event){
         onKeyDown(event);
