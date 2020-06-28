@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeamOpenJava start</title>
+    <script src="./jquery.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="my.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,16 +28,29 @@
           <div></div>
           <div></div>
         </div>
+        <div id="chat_board">
+			<p id="starter">채팅창에 오신것을 환영합니다.<p>
+		</div>
+		
+		<div>
+			<input id="name" value="닉네임"></input>
+			<button id="idset">닉네임 설정/수정</button>
+		</div>
+
+		<input id="chatc" type="text"></input>
+		<button id="enter">Enter</button>
+
+		<script type="text/javascript" src="./my.js"></script>
         <!--클릭 후 나오는 메뉴-->
         <div id="hidden">
           <ul><!--주소입력안함-->
-            <li><a href="file:///D:/teamOpenJava/start.html">TeamOpenJava</a></li>
-            <li><a href="#">GameMenu</a></li>
-            <li><a href="file:///D:/teamOpenJava/covid.html">COVID-19</a></li>
+            <li><a href="tstart.html">TeamOpenJava</a></li>
+            <li><a href="테트리스.html">Tetris</a></li>
+            <li><a href="covid.html">COVID-19</a></li>
           </ul>
         </div>
     <!--첫 시작 제목-->
-    <h1><a href="file:///D:/teamOpenJava/start.html"><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></a></h1>
+    <h1><a href="start.html"><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></a></h1>
     <!--검색창-->
     <h4 class="google">구글</h4>
     <form action="https://www.google.com/search" method="GET">
@@ -54,6 +69,7 @@
                 <input name="q" type="text" class="form-control rounded-pill" placeholder="다음 검색창입니다." aria-label="네이버 검색창입니다.">
             </div>
     </form>
+    
     <div id="main-footer">
         <footer class="container">
             <div>©2020-2020 동서대학교 teamOpenJava. All rights reserved.</div>
