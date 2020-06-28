@@ -89,6 +89,26 @@ h4{
     color:#4285f4;
 }
 
+/*주석*/
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 0px;
+}
+#main-footer {
+    padding-top: 40px;
+    margin-bottom: 0px;
+}
+footer {
+    background: #323232;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    line-height: 40px;
+}
+
 /*내용*/
 .inline{
     position: absolute;
@@ -97,4 +117,8 @@ h4{
 }
 .mp4set{
     width:900px; left:0; right:0; margin-left:auto; margin-right:auto;
+}
+table{
+    width:900px; left:0; right:0; margin-left:auto; margin-right:auto;
+    text-align:center; 
 }
