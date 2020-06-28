@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>테트리스</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>테트리스</title>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        //버튼 표시/숨김
+        function toggleBTN(){
+            var hidden = document.getElementById("hidden");
+            hidden.style.height = window.innerHeight - 60+"px";
+            if(hidden.style.right == "0px"){
+                hidden.style.right = "-300px";
+            } else {
+                hidden.style.right = "0px";
+            }
+        }
+      </script>
+        <div id="Btn" onclick="toggleBTN()">
+        <!--목록처럼 보이기-->
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <!--클릭 후 나오는 메뉴-->
+        <div id="hidden">
+          <ul><!--주소입력안함-->
+            <li><a href="start.html">TeamOpenJava</a></li>
+            <li><a href="테트리스.html">Tetris</a></li>
+            <li><a href="covid.html">COVID-19</a></li>
+          </ul>
+        </div>
+        <h1 id="covidtitle"><a href="start.html"><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></a></h1>
 <script>
 var init=false;
 var myCanvas;
