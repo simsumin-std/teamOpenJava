@@ -6,8 +6,8 @@
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-        var init=false;
+<script>
+var init=false;
 var myCanvas;
 var Context;
 var square;
@@ -15,10 +15,17 @@ var square_boxsize=25;
 var square_top=50;
 var square_left=280;
 var square_in;
-var square_in_this;
+var square_in_this; //현재 블럭
 
+var RunEvent;
+var RunEventTime = 500;
+var level=1;
+var exp=0;
+var score;
 
-
+var Mode=1;
+const MODE_GAME=1;
+const MODE_GAMEOVER=2;
 
 function square_in_init()
 {
@@ -64,14 +71,14 @@ function Init()
         myCanvas=document.getElementById("MyCanvas")
         Context=myCanvas.getContext("2d");
         init=true;
-        square_init();
-        square_in_init();
-        square_in_number=Math.floor(Math.random()*6.9);
-        square_in_this=square_in[square_in_number].slice();
-        
+        square_init(); //블럭 상자 초기화
+        square_in_init(); //블럭 초기화
+        square_in_number=Math.floor(Math.random()*6.9); // 랜덤으로 블럭
+        square_in_this=square_in[square_in_number].slice(); //전역변수
+        score=0; //점수 초기화
     }
 }
-function square_init()
+function square_init() //블럭 상자 초기화
 {
     square=new Array();
     for(i=0;i<20;++i) //전위 연산자
@@ -81,122 +88,193 @@ function square_init()
         square[i][j]=0; //배열 초기화
     }
 }
-function Run()
+
+function onDraw() //그리기
 {
-        var size=square_in_this.length;
-        square_y++;
-        if(CheckConflict()) //겹침
+    if(init==false)return;
+    
+    //테두리
+    Context.strokeStyle="#000"; //선 색상
+    Context.lineWidth=1; //선 두께
+    Context.strokeRect(0, 0, myCanvas.width-1, myCanvas.height-1); //테두리만 있는 사각형
+    Context.fillStyle='#fcfcfc' //흰색
+    Context.fillRect(1, 1, myCanvas.widdth-2, myCanvas.height-2);//사각형 채우기
+    
+    
+	for(i=0;i<20;++i)
+        for(j=0;j<10;++j)
         {
-            square_y--;
+            if(square[i][j]==0)
+                Context.fillStyle="#D8D8D8"; //표 회색
+            else
+                Context.fillStyle="green";
+        
+            var size=square_in_this.length; //떨어지는 블럭 표시
             for(k=0;k<size;k+=2)
             {
-            check_y = square_y + square_in_this[k];
-            check_x = square_x + square_in_this[k+1];
-            square[check_y][check_x]=1;
+            if(square_y + square_in_this[k] == i
+                && square_x + square_in_this[k+1] == j)
+                    Context.fillStyle='blue'
             }
-
-            square_y=0;
-            square_x=3;
-
-            square_in_number=Math.floor(Math.random()*6.9);
-            square_in_this=square_in[square_in_number].slice();           
-	    }
-        onDraw();
-}
-
-function onDraw()
+        
+        x=square_left + j*square_boxsize;
+        y=square_top + i*square_boxsize;
+        Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
+        }
+    
+    //점수표시
+    Context.font = "30px 나눔고딕";
+	Context.fillStyle="#e1e1e1";
+	Context.fillRect(10, 60, 250, 40);
+	Context.fillRect(10, 120, 250, 40);
+	Context.fillStyle="blue";
+	Context.fillText("Score " + score, 50, 90);
+	Context.fillText("Level " + level, 50, 150);
+    
+    if(Mode==MODE_GAMEOVER) //게임오버 표시
     {
-        if(init==false)return;
-
-        Context.strokeStyle="#000"; //선 색상
-        Context.lineWidth=1; //선 두께
-		Context.strokeRect(0, 0, myCanvas.width-1, myCanvas.height-1); //테두리만 있는 사각형
-		
-		
-		for(i=0;i<20;++i)
-			for(j=0;j<10;++j)
-			{
-				if(square[i][j]==0)
-				Context.fillStyle="#D8D8D8"; //색깔
-			else
-                Context.fillStyle="green";
-                
-                var size=square_in_this.length; //떨어지는 블럭 검사
-                for(k=0;k<size;k+=2)
-                {
-                    if(square_y + square_in_this[k] == i
-                        && square_x + square_in_this[k+1] == j)
-                        Context.fillStyle='blue'
-                }
-			    x=square_left + j*square_boxsize;
-			    y=square_top + i*square_boxsize;
-			    Context.fillRect(x, y, square_boxsize-2,square_boxsize-2); //사각형 그리기
-			}
+        Context.fillStyle="red";
+        Context.fillText('GAME OVER', square_left + 40, square_top + 250);
     }
+}
 
 function onKeyDown(event)
 {
-        if(event.which==37)
+    if(Mode==MODE_GAME) //게임중 일때 회전키 작동
+    {    
+        if(event.which==37) //왼쪽키
         {   
-        square_x--;
-        if(CheckConflict())square_x++;
-        else
+            square_x--;
+            if(CheckConflict())square_x++;
+            else
             onDraw();
+        }
+        
+        if(event.which==40 || event.which==32) //아래키,스페이스바
+        {   
+            square_y++;
+            if(CheckConflict())square_y--;
+            else
+            onDraw();
+        }
+        
+        if(event.which==39) //오른쪽키
+        {   
+            square_x++;
+            if(CheckConflict())square_x--;
+            else
+            onDraw();
+        }
+        
+        if(event.which==38) //위쪽키
+        {   
+            Rotateblock();
+            onDraw();
+        }
     }
     
-    if(event.which==40 || event.which==32)
-    {   
-        square_y++;
-        if(CheckConflict())square_y--;
-        else
-            onDraw();
-    }
-
-    if(event.which==39)
-    {   
-        square_x++;
-        if(CheckConflict())square_x--;
-        else
-            onDraw();
+    else if(Mode==MODE_GAMEOVER) //게임오버일때 다시시작 enter
+    {
+        if(event.which==13) //enter키
+        {
+            square_init(); //블럭상자 초기화
+            square_in_number=Math.floor(Math.random()*6.9);
+            square_in_this=square_in[square_in_number].slice();
+            score=0;
+            Mode=MODE_GAME;
+        }
     }
     
-    if(event.which==38)
-    {   
-        Rotateblock();
-        onDraw();
-    }
-
 }
-function Rotateblock()
+function Rotateblock() //블럭 회전
 {
     switch(square_in_number)
 	{
 		case 0: case 1: case 2: case 3: case 4: case 5: // 0~5 블럭모양
-			centerY=0; centerX=1;
+        centerY=0; centerX=1; //중심점
 			break;
-		case 6: // 6 블럭모양
+            case 6: // 6 블럭모양
 			return;
-	}
-	square_in_save = square_in_this.slice();
-	for(i=0;i<square_in_this.length;i+=2)
-	{
-		y=square_in_this[i+1] - centerX;
-		x= -(square_in_this[i] - centerY);
-		square_in_this[i]=y + centerY;
-		square_in_this[i+1]=x + centerX;
-	}
-	if(CheckConflict())
+    }
+        square_in_save = square_in_this.slice(); //원본 모양 저장 
+        for(i=0;i<square_in_this.length;i+=2) 
+        {
+            y=square_in_this[i+1] - centerX; //새y값 전x값으로 새x는 전-y값으로
+            x= -(square_in_this[i] - centerY);
+            square_in_this[i]=y + centerY; // 상대좌표로 변형계산 후 + 중심값 
+            square_in_this[i+1]=x + centerX;
+        }
+        if(CheckConflict()) //충돌시 원본모양
 		square_in_this=square_in_save.slice();
 }
+    
+function Run() 
+{
+    if(CheckConflict()) //블럭을 떨어뜨리지도 않았는데 충돌해 있으면 게임오버
+        Mode=MODE_GAMEOVER;
+    if(Mode==MODE_GAME)
+    {
+        square_y++ //블럭을 한칸 떨어뜨리고
+    
+         if(CheckConflict()) //겹침확인
+         {
+            square_y--; //다시 위로 이동
+            var size=square_in_this.length;    
+            
+            for(k=0;k<size;k+=2) //블럭들을 고정시킨다
+            {
+                check_y = square_y + square_in_this[k];
+                check_x = square_x + square_in_this[k+1];
+                square[check_y][check_x]=1;
+            }
 
+            for(i=0;i<20;++i) //꽉 찬줄 검사 (블럭삭제)
+            {
+                sum=0;
+                for(j=0;j<10;++j)
+                    if(square[i][j]!=0)
+                        sum++;
+
+                if(sum==10) //합계가 10이면 꽉찬것
+                {
+                    for(k=i; k>0; --k) //위의 내용들을 아래로 복사
+                        for(j=0;j<10;++j)
+                            square[k][j]=square[k-1][j];
+                    score+=10;
+
+                    exp++; //경험치 증가
+                    if(exp>=10)
+                    {
+                        level++; exp=0;
+                        RunEventTime-=50;
+                        clearInterval(RunEvent);
+                        RunEvent=setInterval(Run,RunEventTime);
+                    }
+                }
+            }
+
+            square_y=0; //블럭들을 원래 위치로 생성
+            square_x=3;
+
+            square_in_number=Math.floor(Math.random()*6.9); //블록번호 변경
+            square_in_this=square_in[square_in_number].slice();   
+          
+                
+        }
+    }onDraw();
+}
 function CheckConflict()
 {
     var size=square_in_this.length;
     for(k=0;k<size;k+=2)
     {
-        check_y=square_y + square_in_this[k];
+        check_y=square_y + square_in_this[k]; //블럭들의 위치
         check_x=square_x + square_in_this[k+1];
-        if(check_x < 0 || check_x >=10 || check_y >=20 || square[check_y][check_x]!=0)return true;
+        if(check_y<0)continue; // y가 0보다 작으면 검사x
+
+        if(check_x < 0 || check_x >=10 || check_y >= 20 || square[check_y][check_x]!=0) //겹칠때
+        return true;
+
     }
     return false;
 
@@ -205,9 +283,9 @@ function CheckConflict()
 	
 	$(document).ready(function(){ //자동 실행 함수
 		Init();
-		setInterval(Run,500); //내부 함수 주기적으로 실행
+		RunEvent= setInterval(Run,RunEventTime); //내부 함수 주기적으로 실행
     });
-    $(document).keydown(function(event){
+    $(document).keydown(function(event){ //키 누를때
         onKeyDown(event);
     });
     </script>
