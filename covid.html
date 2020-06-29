@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+<style>
+  .frontLayout{
+    position: absolute;
+    z-index: 2;
+  }
+  .backLayout{
+    position: absolute;
+    margin-left: 200px;
+    z-index: 1;
+  }
+</style>
 <body>
+  <div class="frontLayout">
     <script>
         //버튼 표시/숨김
         function toggleBTN(){
@@ -45,6 +57,8 @@
             <li><a href="https://coronamap.site/">코로나 맵</a></li>
           </ul>
         </div>
+      </div>
+      <div class="backLayout">
         <h1 id="covidtitle"><a href="start.html"><span>T</span><span>eam</span><span>O</span><span>pen</span><span>J</span><span>ava</span></a></h1>
         <!--코로나와 관련된 내용-->
         <nav id="navbar-example2" class="navbar navbar-light bg-light mx-auto mt-5">
@@ -89,5 +103,6 @@
                 </table>
                 <br><br><br><br><br><br><br><br><br>
           </div>
+        </div>
 </body>
 </html>
